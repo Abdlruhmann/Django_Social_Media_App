@@ -1,0 +1,118 @@
+{% extends 'nav_base.html' %}
+
+{% block page_content %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-body">
+            <div class="row align-items-center">
+                <div class="col-md-1">
+                    <img src="{{ request.user.profile.profile_img.url }}" class="rounded-circle" height="40" alt="User Avatar">
+                </div>
+                <div class="col-md-10">
+                    <input type="text" class="form-control rounded-pill" placeholder="What's on your mind?" data-bs-toggle="modal" data-bs-target="#createPostModal">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="createPostModal" tabindex="-1" aria-labelledby="createPostModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-secondary text-white">
+                    <h5 class="modal-title" id="createPostModalLabel">Create New Post</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Your form for creating a post -->
+                    <form method="POST" action="{% url 'SM:index' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="postContent" class="form-label">Post Content</label>
+                            <textarea class="form-control" id="postContent" name="content" rows="6" placeholder="Write your post content here..." required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="postImage" class="form-label">Post Image</label>
+                            <input type="file" class="form-control" id="postImage" name="post_img">
+                        </div>
+                        <div class="mb-3">
+                            <label for="postTags" class="form-label">Tags</label>
+                            <input type="text" class="form-control" id="postTags" name="tags" placeholder="Add tags (comma separated)">
+                        </div>
+                        <button type="submit" class="btn btn-secondary">Create Post</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    {% if post_list %}
+        {% for post in post_list %}
+           <div class="row justify-content-center" style="padding-top: 30px">
+                <div class="col-6">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="{{ post.author.profile.profile_img.url }}" class="rounded-circle" height="40" alt="Avatar">
+                                <div class="ms-3">
+                                    <a href="{% url 'SM:user_profile' post.author.profile.id %}">
+                                        <h6 class="card-title mb-1">@{{ post.author.username }}</h6>
+                                    </a>
+                                    <small class="text-muted">Posted on {{ post.published_at }}</small>
+                                </div>
+                                <!-- post options -->
+                                <div class="ms-auto">
+                                <div class="dropdown">
+                                    <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: black;">
+                                        <i class="bi bi-three-dots-vertical"></i> 
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        {% if post.author == request.user %}
+                                        <li><a class="dropdown-item" href="{% url 'SM:delete_post' post.id %}">Delete</a></li>
+                                        {% else %}
+                                        <li><a class="dropdown-item" href="#">Not the same user</a></li>
+                                        {%endif%}
+                                    </ul>
+                                  </div>
+                                </div>
+                                  <!-- post options end -->
+                            </div>
+                            <hr>
+                            <p class="card-text">{{ post.content }}.</p>
+                            {% if post.post_img %}
+                                <img src="{{ post.post_img.url }}" class="img-fluid mb-3 rounded" alt="Post Image" style="width: 100%; height: auto;">
+                            {% endif %}
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span><i class="bi bi-heart"></i> {{ post.no_of_likes }}</span>
+                                <span><i class="bi bi-chat"></i> {{post.comments.count}} Comments</span>
+                            </div>
+                            <hr>
+                            
+                            <div class="d-flex justify-content-around">
+                                {% if is_liked == True %}
+                                <a href="{% url 'SM:like_post' post.id %}" class="btn btn-outline-secondary btn-sm">
+                                    <i class="bi bi-hand-thumbs-up"></i> Unlike
+                                </a>
+                                {% else %}
+                                <a href="{% url 'SM:like_post' post.id %}" class="btn btn-outline-secondary btn-sm">
+                                    <i class="bi bi-hand-thumbs-up"></i> Like
+                                </a>
+                                {%endif%}
+                                <a href="{% url 'SM:post_details' post.id %}" class="btn btn-outline-secondary btn-sm">
+                                    <i class="bi bi-chat"></i> Comment
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="row justify-content-center" style="padding-top: 30px">
+            <div class="col-5">
+                <strong>No Posts!</strong>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

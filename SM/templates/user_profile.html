@@ -1,0 +1,133 @@
+{% extends 'nav_base.html' %}
+{%block page_content%}
+<div class="container">
+    <div class="row">
+       <div class="col-md-12">
+          <div id="content" class="content content-full-width">
+             <!-- begin profile -->
+             <div class="profile">
+                <div class="profile-header">
+                   <!-- BEGIN profile-header-cover -->
+                   <div class="profile-header-cover"></div>
+                   <!-- END profile-header-cover -->
+                   <!-- BEGIN profile-header-content -->
+                   <div class="profile-header-content">
+                      <!-- BEGIN profile-header-img -->
+                      <div class="profile-header-img">
+                         <img src="{{profile.profile_img.url}}" alt="Profile_Picture">
+                         <input type="file" id="id_profile_img" name="profile_img" style="display: none;">
+                      </div>
+                      <!-- END profile-header-img -->
+                      <!-- BEGIN profile-header-info -->
+                      <div class="profile-header-info">
+                         <h4 class="m-t-10 m-b-5">{{profile.user.username}}</h4>
+                         <p class="m-b-10">UXUI + Frontend Developer</p>
+                         {%if profile.user == request.user %}
+                         <a href="{% url 'SM:edit_profile' profile.id %}" class="btn btn-sm btn-info mb-2">Edit Profile</a>
+                         {%else%}
+                         {%if is_followed %}
+                         <a href="{% url 'SM:user_profile/add_follower' profile.id %}" class="btn btn-sm btn-info mb-2">UnFollow</a>
+                         {%else%}
+                         <a href="{% url 'SM:user_profile/add_follower' profile.id %}" class="btn btn-sm btn-info mb-2">Follow</a>
+                         {%endif%}
+                         {%endif%}
+                      </div>
+                      <!-- END profile-header-info -->
+                   </div>
+                   <!-- END profile-header-content -->
+                   <!-- BEGIN profile-header-tab -->
+                   <ul class="profile-header-tab nav nav-tabs">
+                      <li class="nav-item"><a href="https://www.bootdey.com/snippets/view/bs4-profile-with-timeline-posts" target="__blank" class="nav-link_ active show" data-target="posts">POSTS</a></li>
+                      <li class="nav-item"><a href="https://www.bootdey.com/snippets/view/bs4-profile-friend-list" target="__blank" class="nav-link_ " data-target="friends">FRIENDS</a></li>
+                      <li class="nav-item ml-auto">
+                        <a href="#" class="nav-link disabled">Followers: {{no_of_followers}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link disabled">Following: {{no_of_followings}}</a>
+                    </li>
+                   </ul>
+                   <!-- END profile-header-tab -->
+                </div>
+             </div>
+             <!-- end profile -->
+             <!-- begin profile-content -->
+             <div class="profile-content">
+                <!-- begin tab-content -->
+                <div class="tab-content p-0">
+                   <!-- begin #profile-post tab -->
+                   <div class="tab-pane fade active show" id="profile-post">
+                     <div id="posts" class="content active">
+                        
+                     </div>
+                      <!-- begin timeline -->
+                      {%for post in user_posts %}
+                      <ul class="timeline">
+                         <li>
+                            <!-- begin timeline-time -->
+
+                            <div class="timeline-time">
+                               <span class="date">{{ post.published_at|date:"D"}}</span>
+                               <span class="time">{{post.published_at|date:"h: A"}}</span>
+                            </div>
+                            <!-- end timeline-time -->
+                            <!-- begin timeline-icon -->
+                            <div class="timeline-icon">
+                               <a href="javascript:;">&nbsp;</a>
+                            </div>
+                            <!-- end timeline-icon -->
+                            <!-- begin timeline-body -->
+                            <div class="timeline-body">
+                               <div class="timeline-header">
+                                  <span class="userimage"><img src="{{post.author.profile.profile_img.url}}" alt=""></span>
+                                  <span class="username"><a href="javascript:;">{{post.author.username}}</a> <small></small></span>
+                                  <span class="pull-right text-muted">18 Views</span>
+                               </div>
+                               
+                               {% if post.post_img %}
+                                <img src="{{ post.post_img.url }}" class="img-fluid mb-3 rounded" alt="Post Image" style="width: 100%; height: auto; padding-top:10px">
+                            {% endif %}
+                               <div class="timeline-content">
+                                  <p>
+                                    {{post.content}}
+                                  </p>
+                               </div>
+                               <div class="timeline-likes">
+                                  <div class="stats-right">
+                                     <!-- <span class="stats-text">259 Likes</span> -->
+                                     <span class="stats-text">{{post.comments.count}} Comments</span>
+                                  </div>
+                                  <div class="stats">
+                                     <span class="fa-stack fa-fw stats-icon">
+                                     <i class="fa fa-circle fa-stack-2x text-danger"></i>
+                                     <i class="fa fa-heart fa-stack-1x fa-inverse t-plus-1"></i>
+                                     </span>
+                                     <span class="fa-stack fa-fw stats-icon">
+                                     <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                     <i class="fa fa-thumbs-up fa-stack-1x fa-inverse"></i>
+                                     </span>
+                                     <span class="stats-total">{{post.no_of_likes}}</span>
+                                  </div>
+                               </div>
+                               <div class="timeline-footer">
+                                  <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> Like</a>
+                                  <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i class="fa fa-comments fa-fw fa-lg m-r-3"></i> Comment</a> 
+                                  <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i class="fa fa-share fa-fw fa-lg m-r-3"></i> Share</a>
+                               </div>
+                               <div class="timeline-comment-box">
+                                  <div class="user"><img src="{{post.author.profile.profile_img.url}}"></div>
+                                  <div class="input">
+                                     <form action="">
+                                        <div class="input-group">
+                                           <input type="text" class="form-control rounded-corner" placeholder="Write a comment...">
+                                           <span class="input-group-btn p-l-10">
+                                           <button class="btn btn-secondary f-s-12 rounded-corner" type="button">Comment</button>
+                                           </span>
+                                        </div>
+                                     </form>
+                                  </div>
+                               </div>
+                            </div>
+                            {%endfor%}
+                            <!-- end timeline-body -->
+                         
+{% endblock %}

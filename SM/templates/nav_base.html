@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{%load static%}
+{%block content%}
+<nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar">
+    <div class="container-fluid">
+      <!-- Logo -->
+      <a class="navbar-brand" href="{% url 'SM:index' %}"><img src="{% static 'logo.png' %}" alt="Logo" height="40"></a>
+      
+      <!-- Search Bar -->
+      <form action="{% url 'SM:users_list' %}" method="POST">
+        {%csrf_token%}
+        <div class="input-group rounded">
+          <input type="search" name="username" class="form-control rounded-pill" placeholder="Search a username" aria-label="Search" aria-describedby="search-addon"/>
+          <span class="input-group-text border-0" id="search-addon">
+            <button type="submit" class="btn btn-outline-secondary border-0 rounded-end"><i class="fas fa-search"></i></button>
+          </span>
+        </div>
+      </form>
+      
+
+      <!-- Navbar toggler for mobile -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!-- Right side of navbar -->
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <!-- Notification Icon -->
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="bi bi-bell"></i></a>
+          </li>
+          <!-- Messages Icon -->
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="bi bi-chat-dots"></i></a>
+          </li>
+          <!-- Profile Picture and Dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="{{request.user.profile.profile_img.url}}" alt="Profile" class="rounded-circle" height="40">
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{% url 'SM:user_profile' request.user.profile.id %}">Profile</a></li>
+              <li><a class="dropdown-item" href="{% url 'SM:settings' request.user.profile.id %}">Settings</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{% url 'SM:logout' %}">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+{% block page_content %}{% endblock %}
+</div>
+{% endblock %}

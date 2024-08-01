@@ -1,0 +1,67 @@
+{% extends 'nav_base.html' %}
+
+{% block page_content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="{{ post.author.profile.profile_img.url }}" class="rounded-circle" height="40" alt="Avatar">
+                        <div class="ms-3">
+                            <a href="{% url 'SM:user_profile' post.author.profile.id %}">
+                                <h6 class="card-title mb-1">@{{ post.author.username }}</h6>
+                            </a>
+                            <small class="text-muted">Posted on {{ post.published_at }}</small>
+                        </div>
+                    </div>
+                    <hr>
+                    <p class="card-text">{{ post.content }}</p>
+                    {% if post.post_img %}
+                        <img src="{{ post.post_img.url }}" class="img-fluid mb-3 rounded" alt="Post Image" style="width: 100%; height: auto;">
+                    {% endif %}
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <a href="{% url 'SM:like_post' post.id %}" >
+                            <i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i>
+                        </a>
+                        <span>{{ post.no_of_likes }} Likes</span>
+                        <span><i class="bi bi-chat"></i> {{ comments.count }} Comments</span>
+                    </div>
+                    <hr>
+                    <!-- Comments Section -->
+                    <div id="commentsSection">
+                        {% for comment in comments %}
+                        <div class="mb-3">
+                            <div class="d-flex align-items-center mb-2">
+                                <img src="{{ comment.author.profile.profile_img.url }}" class="rounded-circle" height="30" alt="Commenter Avatar">
+                                <a href="{% url 'SM:user_profile' comment.author.profile.id %}">
+                                    <p class="ms-2">@{{ comment.author.username }}</p>
+                                </a>
+                            </div>
+                            <p>{{ comment.content }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="{% url 'SM:like_post' post.id %}" >
+                                    <i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i>
+                                </a>
+                                <span>{{ comment.likes }} Likes</span>
+                                <small class="text-muted">{{ comment.created_at }}</small>
+                            </div>
+                            <hr>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <!-- Add New Comment Form -->
+                    <form action="{% url 'SM:post_details' post.id %}" method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="commentContent" class="form-label">Add a Comment</label>
+                            <textarea class="form-control" id="commentContent" name="content" rows="2" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-secondary">Comment</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
