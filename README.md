@@ -57,6 +57,9 @@ The Django Social Media App is a feature-rich social media platform developed wi
 
 
 ## **Acknowledgements**
--**Django for providing the framework:**
--**Bootstrap for styling and responsiveness:**
--**Pillow for image uploading:**
+
+- **Django** for providing the framework
+
+- **Bootstrap** for styling and responsiveness
+
+- **Pillow** for image uploading
