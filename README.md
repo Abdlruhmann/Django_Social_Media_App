@@ -56,6 +56,24 @@ The Django Social Media App is a feature-rich social media platform developed wi
         http://127.0.0.1:8000/
 
 
+## **App Examples**
+
+1. **Login Page:**
+    ![Alt text](doc_images/login.png)
+2. **Create New Post:**
+    ![Alt text](doc_images/create_new_post.png)
+3. **Feed:**
+    ![Alt text](doc_images/Feed.png)
+4. **Profile Page:**
+    ![Alt text](doc_images/profile_page.png)
+5. **Edit Profile:**
+    ![Alt text](doc_images/edit_profile.png)
+6. **Profile Settings:**
+    ![Alt text](doc_images/profile_settings.png)
+7. **Search a user:**
+    ![Alt text](doc_images/search_user.png)
+
+
 ## **Acknowledgements**
 
 - **Django** for providing the framework
