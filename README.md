@@ -38,7 +38,7 @@ The Django Social Media App is a feature-rich social media platform developed wi
         Install the required packages:
 
 3. **Install requirments:**
-        ```bash
+    ```bash
             pip install -r requirements.txt
 
 4. **Apply migrations:**
