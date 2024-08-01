@@ -12,4 +12,3 @@ media/
 *.pyc
 __pycache__
 db.sqlite3
-doc_images
