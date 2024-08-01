@@ -25,82 +25,38 @@ The Django Social Media App is a feature-rich social media platform developed wi
 
     Navigate to the project directory:
 
-bash
+2. **Create/Activate the enviroment:**
+    ```bash
+        cd Django_Social_Media_App
 
-    cd Django_Social_Media_App
+        Create and activate a virtual environment:
 
-    Create and activate a virtual environment:
+    
+        python -m venv env
+        source env/bin/activate   # On Windows use: .\env\Scripts\activate
 
-bash
+        Install the required packages:
 
-    python -m venv env
-    source env/bin/activate   # On Windows use: .\env\Scripts\activate
+3. **Install requirments:**
+        ```bash
+        pip install -r requirements.txt
 
-    Install the required packages:
+4. **Apply migrations:**
 
-bash
+    ```bash
 
-    pip install -r requirements.txt
+        python manage.py migrate
+        Create a superuser (optional but recommended for admin access):
 
-    Apply migrations:
 
-bash
+5. **Run development server:**
+    ```bash
+        python manage.py runserver
+        Open your browser and go to:
+        http://127.0.0.1:8000/
 
-    python manage.py migrate
 
-    Create a superuser (optional but recommended for admin access):
-
-bash
-
-    python manage.py createsuperuser
-
-    Run the development server:
-
-bash
-
-    python manage.py runserver
-
-    Open your browser and go to:
-
-arduino
-
-    http://127.0.0.1:8000/
-
-Usage
-
-    User Registration: Sign up to create an account.
-    Login: Log in with your credentials.
-    Feed: View the dynamic feed to see recent posts from users you follow.
-    Create Posts: Share your thoughts and media.
-    Interact: Like, comment, and follow users.
-    Manage Profile: Update your profile information and view your posts.
-
-Contributing
-
-    Fork the repository.
-
-    Create a new branch for your feature or fix:
-
-    bash
-
-        git checkout -b feature/your-feature-name
-
-        Commit your changes:
-
-bash
-
-git commit -am 'Add new feature or fix'
-
-Push the branch to your fork:
-
-bash
-
-    git push origin feature/your-feature-name
-
-    Create a pull request on GitHub.
-
-Acknowledgements
-
-    Django for providing the framework
-    Bootstrap for styling and responsiveness
-    [Other libraries or resources used]
+## **Acknowledgements**
+-**Django for providing the framework:**
+-**Bootstrap for styling and responsiveness:**
+-**Pillow for image uploading:**
