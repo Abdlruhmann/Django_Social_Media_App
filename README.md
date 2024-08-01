@@ -25,42 +25,42 @@ The Django Social Media App is a feature-rich social media platform developed wi
 
     Navigate to the project directory:
 
-    bash
+bash
 
-cd Django_Social_Media_App
+    cd Django_Social_Media_App
 
-Create and activate a virtual environment:
+    Create and activate a virtual environment:
 
 bash
 
-python -m venv env
-source env/bin/activate   # On Windows use: .\env\Scripts\activate
+    python -m venv env
+    source env/bin/activate   # On Windows use: .\env\Scripts\activate
 
-Install the required packages:
-
-bash
-
-pip install -r requirements.txt
-
-Apply migrations:
+    Install the required packages:
 
 bash
 
-python manage.py migrate
+    pip install -r requirements.txt
 
-Create a superuser (optional but recommended for admin access):
-
-bash
-
-python manage.py createsuperuser
-
-Run the development server:
+    Apply migrations:
 
 bash
 
-python manage.py runserver
+    python manage.py migrate
 
-Open your browser and go to:
+    Create a superuser (optional but recommended for admin access):
+
+bash
+
+    python manage.py createsuperuser
+
+    Run the development server:
+
+bash
+
+    python manage.py runserver
+
+    Open your browser and go to:
 
 arduino
 
@@ -83,9 +83,9 @@ Contributing
 
     bash
 
-git checkout -b feature/your-feature-name
+        git checkout -b feature/your-feature-name
 
-Commit your changes:
+        Commit your changes:
 
 bash
 
